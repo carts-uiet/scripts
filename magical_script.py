@@ -11,7 +11,7 @@ def get_data_from_file(filename, delimiter=None):
     if not delimiter:
         delimiter = '\t'
     path_to_csv = filename
-    data = np.genfromtxt(path_to_csv, delimiter)
+    data = np.genfromtxt(path_to_csv, delimiter=delimiter)
     print(str(len(data)) + ' values read in from csv.')
     print(data)
     return data
