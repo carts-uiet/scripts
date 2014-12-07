@@ -103,6 +103,8 @@ def main():
     parser.add_argument("-o", "--output", type=str, dest="output",
                         default=output_filename,
                         help="Optionally specify the output filename")
+    parser.add_argument("-p", "--plot", action='store_true', dest="plot",
+                        help="To plot the input file")
     parser.add_argument("-n", "--no-crop", action='store_true', dest="nocrop",
                         help="To not to crop the input files")
     parser.add_argument("-c", "--csv", action='store_true', dest="csv",
@@ -114,6 +116,9 @@ def main():
 
     output_file = args.output
     filename = args.filename
+    if args.plot:
+        plot_this_shi(get_acc_from_file(filename))
+        return
     if os.path.isdir(filename):
         do_magic_on_dir(filename, output_file, iscsv=args.csv,
                 nocrop=args.nocrop)
