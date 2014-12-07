@@ -6,6 +6,14 @@ Scripts used for CARTS UIET project so far
   ```bash
       $ ./magical_script.py -f inputfile.tsv -o output.csv
   ```
+  You can do the following for a folder  
+  ```bash
+      $ ./magical_script.py -f folder/ -o output.csv
+  ```
+  If you don't want to crop any files you may add  
+  ```bash
+      $ ./magical_script.py -f FILE/FOLDER -n
+  ```
 
 
 * Make feature file using windows from .train file  
@@ -26,3 +34,11 @@ Scripts used for CARTS UIET project so far
   ```bash
   $ cat old_train_file.train new_libsvm.train > new_train_file.train
   ```
+
+#### Other tasks that these scripts can do
+
+* Plot a tsv file  
+  ```bash
+      $ ./magical_script.py -f inputfile.tsv -p
+  ```
+
