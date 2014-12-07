@@ -49,7 +49,7 @@ def convert_to_csv(filename, data=None):
     np.savetxt(out_filename, data, delimiter=',')
 
 def crop_out_junk(data, output_file):
-    plot_this_shi(data[:, 2:5])
+    plot_this_shi(data)
     in1 = input('Enter bounds <lb ub>: ')
     if in1 == '':   #Press nothing
         lower = 0
@@ -77,12 +77,23 @@ def append_output(data, output_file, nocrop=False):
     np.savetxt(output_file, full_data, delimiter=',')
     return cropped_data
 
-def plot_this_shi(accelerations):
+def plot_this_shi(thing):
     ''' Plot these accelerations
+        @params: either numpy.ndarray or filename
     '''
-    plt.plot(accelerations)
+    filename = ''
+    data = None
+    if isinstance(thing, np.ndarray):
+        data = thing
+    else:
+        filename = thing
+        data = get_acc_from_file(filename)
+    plt.plot(data)
     plt.ylabel('Acceleration')
     plt.xlabel('Serial data point')
+    plt.legend(('Ax', 'Ay', 'Az'), loc='best')
+    if filename:
+        plt.title('Filename: ' + filename)
     plt.show()
 
 def do_magic_on_dir(dirname, output_file, iscsv=False, nocrop=False):
@@ -134,7 +145,7 @@ def main():
     output_file = args.output
     filename = args.filename
     if args.plot:
-        plot_this_shi(get_acc_from_file(filename))
+        plot_this_shi(filename)
         return
     if os.path.isdir(filename):
         do_magic_on_dir(filename, output_file, iscsv=args.csv,
