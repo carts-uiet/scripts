@@ -84,10 +84,15 @@ def plot_this_shi(thing):
     filename = ''
     data = None
     if isinstance(thing, np.ndarray):
+        print('is an array')
         data = thing
-    else:
+    elif os.path.isfile(thing):
+        print('isfile')
         filename = thing
         data = get_acc_from_file(filename)
+    else:
+        print('Unknown input type for plot')
+        return
     plt.plot(data)
     plt.ylabel('Acceleration')
     plt.xlabel('Serial data point')
@@ -147,6 +152,7 @@ def main():
     if args.plot:
         plot_this_shi(filename)
         return
+    print('args.csv=',args.csv)
     if os.path.isdir(filename):
         do_magic_on_dir(filename, output_file, iscsv=args.csv,
                 nocrop=args.nocrop)
