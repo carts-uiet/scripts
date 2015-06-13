@@ -32,13 +32,10 @@ def get_data_from_file(filename, delimiter=None):
     print(str(len(data)) + ' values read in from csv.')
     return data
 
-def slice_acc(data):
-    return data[:, 2:5]
-
 def get_acc_from_file(filename):
     ''' Returns acceleration values extracted from a 'typical' csv file'''
     data = get_data_from_file(filename)
-    accelerations = slice_acc(data)
+    accelerations = data[:, 2:5]
     return accelerations
 
 def convert_to_csv(filename, data=None):
@@ -88,15 +85,15 @@ def plot_this_shi(thing):
     data = None
     if isinstance(thing, np.ndarray):
         print('is an array')
-        acc = slice_acc(thing)
+        data = thing
     elif os.path.isfile(thing):
         print('isfile')
         filename = thing
-        acc = get_acc_from_file(filename)
+        data = get_acc_from_file(filename)
     else:
         print('Unknown input type for plot')
         return
-    plt.plot(acc)
+    plt.plot(data)
     plt.ylabel('Acceleration')
     plt.xlabel('Serial data point')
     plt.legend(('Ax', 'Ay', 'Az'), loc='best')
