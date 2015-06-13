@@ -131,8 +131,11 @@ def main():
     #usage = "%prog [-f credential_file]"
     #parser = ArgumentParser(usage=usage)
     parser = ArgumentParser()
-    parser.add_argument("-f", "--filename", type=str, dest="filename",
-                        required=True, help="Specify the input filename")
+    mutual_ex = parser.add_mutually_exclusive_group(required=True)
+    mutual_ex.add_argument("-f", "--filename", type=str, dest="filename",
+                        help="Specify the input filename")
+    mutual_ex.add_argument("-l", "--filelist", type=str,
+                        help="Specify the input files as a space separated string")
     parser.add_argument("-o", "--output", type=str, dest="output",
                         default=output_filename,
                         help="Optionally specify the output filename")
@@ -152,6 +155,11 @@ def main():
     if args.plot:
         plot_this_shi(filename)
         return
+    if args.filelist:
+        for filename in args.filelist.split(' '):
+            do_magic_on_file(filename, output_file, iscsv=args.csv,
+                    nocrop=args.nocrop)
+        return 0
     print('args.csv=',args.csv)
     if os.path.isdir(filename):
         do_magic_on_dir(filename, output_file, iscsv=args.csv,
